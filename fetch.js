@@ -5,15 +5,27 @@ const http = require('http');
 
 // 2 define function which writes data  to file
 const writeDataToFile = data => {
+    const dir = './result'
+    // only write file if folde exists
+    if(fs.existsSync(dir)){
+        
     fs.writeFile(`${__dirname}/result/posts.txt`,data,(msg,err) => {  
         console.log('File has been written to file')
-    })    
+    }) 
+     
+    }  
+    
+    else{
+        console.log('Directory not found ')
+    }
 }
 
 
 //3. define function which fetches the data from the api and then writes it to file
 const getApiData = (url,writeFileFunction) => { 
+    
     http.get(url, (resp) => {
+        
         let apiData= ''
     // A chunk of data has been received.
     resp.on('data', (chunk) => {
@@ -26,6 +38,7 @@ const getApiData = (url,writeFileFunction) => {
     }).on("error", (err) => {
     console.log("Error: " + err.message);
     });
+    
 }
 
 
